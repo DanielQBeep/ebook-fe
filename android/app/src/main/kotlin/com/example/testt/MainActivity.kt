@@ -1,4 +1,4 @@
-package com.example.testt
+package com.qbeep.testt
 
 import io.flutter.embedding.android.FlutterActivity
 
