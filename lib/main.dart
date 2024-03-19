@@ -64,11 +64,19 @@ class MyAppState extends State<MyApp> {
     prefs.remove('secureFilename');
     enableLoading();
 
-    final extStorageStatus = await Permission.manageExternalStorage.request();
-    final storageStatus = await Permission.storage.request();
-    if (!storageStatus.isGranted || !extStorageStatus.isGranted) {
+  debugPrint('test');
+
+    final storageStatus = await Permission.manageExternalStorage.request();
+    final storageStatuss = await Permission.mediaLibrary.request();
+    final storageStatusss = await Permission.storage.request();
+    if (!storageStatusss.isGranted) {
       disableLoading();
-      debugPrint('Storage permission denied');
+      debugPrint('externalstorage$storageStatus');
+      debugPrint('media$storageStatuss');
+      debugPrint('storage$storageStatusss');
+  debugPrint('perm !allow');
+  openAppSettings();
+
       return;
     }
 
@@ -85,6 +93,9 @@ class MyAppState extends State<MyApp> {
       prefs.setString('secureFilename', secureFilename);
       _addDownloadedPdfFilename(secureFilename);
 
+  debugPrint('file downloaded');
+
+
       await _storage.write(
         key: secureFilename,
         value: base64.encode(response.data),
@@ -94,6 +105,8 @@ class MyAppState extends State<MyApp> {
       setState(() {
         _secureFilename = secureFilename;
         disableLoading();
+  debugPrint('success');
+
       });
     } on DioException catch (error) {
       debugPrint('Download error: $error');
