@@ -64,9 +64,11 @@ class MyAppState extends State<MyApp> {
     prefs.remove('secureFilename');
     enableLoading();
 
-    final storageStatus = await Permission.manageExternalStorage.request();
-    if (storageStatus != PermissionStatus.granted) {
+    final extStorageStatus = await Permission.manageExternalStorage.request();
+    final storageStatus = await Permission.storage.request();
+    if (!storageStatus.isGranted || !extStorageStatus.isGranted) {
       disableLoading();
+      debugPrint('Storage permission denied');
       return;
     }
 
