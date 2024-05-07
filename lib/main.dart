@@ -53,7 +53,6 @@ class MyAppState extends State<MyApp> {
     // final encodedData = await _storage.read(key: _secureFilename!);
     final encodedData = await _storage.read(key: filename);
     if (encodedData != null) {
-      // return base64Decode(encodedData);
       return base64Decode(encodedData);
     }
     return null;
